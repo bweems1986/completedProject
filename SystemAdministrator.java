@@ -166,19 +166,19 @@ public class SystemAdministrator {
                     System.out.println("You are logged in as a: " + employees.get(i).getJobTitle());
                     System.out.println("Enter the van letter that is assigned to you: ");
                     String vanLetter = login.next();
-                    if (employees.get(i).getJobTitle().equals("salesassociate"+vanLetter)) {
-                        while(numChoice != 6) {
+                    if (employees.get(i).getJobTitle().equals("sales" + vanLetter)) {
+                        while (numChoice != 6) {
                             System.out.println("Please select an option from the Sales Associate menu:\n" + "1. Load sales van\n" + "2. Make sale by number and generate invoice\n" +
                                     "3. Make sale by name and generate invoice\n" + "4. Sort van by part name\n" + "5. Sort van by part number\n" + "6. Exit\n");
                             numChoice = login.nextInt();
                             if (numChoice == 1) {
-                                readTransfer();
+                                readTransfer();//enter van + .txt
                             }
                             if (numChoice == 2) {
                                 System.out.println("Enter your van name: ");//example vanA
                                 String vanName = userInput.next();
                                 SalesAssociate salesAssociate = new SalesAssociate(vanName);
-                                if(!vanName.equals("van"+vanLetter)){
+                                if (!vanName.equals("van" + vanLetter)) {
                                     System.out.println("You are not allowed to access this sales van.");
                                     System.exit(0);
                                 }
@@ -206,7 +206,7 @@ public class SystemAdministrator {
                                 System.out.println("Enter your van name: ");
                                 String vanName = userInput.next();
                                 SalesAssociate salesAssociate = new SalesAssociate(vanName);
-                                if(!vanName.equals("van"+vanLetter)){
+                                if (!vanName.equals("van" + vanLetter)) {
                                     System.out.println("You are not allowed to access this sales van.");
                                     System.exit(0);
                                 }
@@ -266,74 +266,74 @@ public class SystemAdministrator {
                                 warehouse.userPart(officeManager.orderParts());
                             }
                             if (numChoice == 4) {
-                                officeManager.salesCommissions();
+                                officeManager.salesCommissions();//enter van letter
                             }
                             if (numChoice == 5) {
                                 System.exit(0);
                             }
                         }
                     }
-                }
-                if (employees.get(i).getJobTitle().equals("warehousemanager")) {
-                    while (numChoice != 10) {
-                    System.out.println("Please select a option from the Warehouse manager menu:\n" + "1. Load warehouse with delivery file\n" + "2. Load warehouse manually\n" + "3. Examine part by name\n" +
-                            "4. Examine part by number\n" + "5. Display a part\n" + "6. Sort all warehouses by name\n" +
-                            "7. Sort all warehouses by number\n" + "8. Sort main warehouse by name\n" +
-                            "9. Sort main warehouse by number\n" + "10. Exit");
-                    numChoice = login.nextInt();
+                    if (employees.get(i).getJobTitle().equals("warehousemanager")) {
+                        while (numChoice != 10) {
+                            System.out.println("Please select a option from the Warehouse manager menu:\n" + "1. Load warehouse with delivery file\n" + "2. Load warehouse manually\n" + "3. Examine part by name\n" +
+                                    "4. Examine part by number\n" + "5. Display a part\n" + "6. Sort vans by name\n" +
+                                    "7. Sort vans by number\n" + "8. Sort main warehouse by name\n" +
+                                    "9. Sort main warehouse by number\n" + "10. Exit");
+                            numChoice = login.nextInt();
 
 
-                        if (numChoice == 1) {
-                            warehouse.readFile();
-                        }
-                        if (numChoice == 2) {
-                            warehouse.userPart(createNewBikePart());
-                        }
-                        if (numChoice == 3) {
-                            System.out.println("Please enter a part name: ");
-                            String partName = userInput.next();
-                            warehouseManager.examinePartName(partName);
-                        }
-                        if (numChoice == 4) {
-                            System.out.println("Please enter a part number: ");
-                            int partNumber = userInput.nextInt();
-                            warehouseManager.examinePartNumber(partNumber);
-                        }
-                        if (numChoice == 5) {
-                            System.out.print("Please enter a part name: ");
-                            String partName = userInput.next();
-                            warehouse.findPart(partName);
-                        }
-                        if (numChoice == 6) {
-                            System.out.print("Please enter each warehouse name separated by commas: (i.e. warehouse,vanA,vanB,vanC)");
-                            String vans = userInput.next();
-                            String[] vansArr = vans.split(",");
-                            for (i = 0; i < vansArr.length; i++) {
-                                if (!vansArr[i].equals("warehouse")) {
-                                    Van vanToSort = new Van(vansArr[i]);
-                                    vanToSort.sortName();
+                            if (numChoice == 1) {
+                                warehouse.readFile();
+                            }
+                            if (numChoice == 2) {
+                                warehouse.userPart(createNewBikePart());
+                            }
+                            if (numChoice == 3) {
+                                System.out.println("Please enter a part name: ");
+                                String partName = userInput.next();
+                                warehouseManager.examinePartName(partName);
+                            }
+                            if (numChoice == 4) {
+                                System.out.println("Please enter a part number: ");
+                                int partNumber = userInput.nextInt();
+                                warehouseManager.examinePartNumber(partNumber);
+                            }
+                            if (numChoice == 5) {
+                                System.out.print("Please enter a part name: ");
+                                String partName = userInput.next();
+                                warehouse.findPart(partName);
+                            }
+                            if (numChoice == 6) {
+                                System.out.print("Please enter each warehouse name separated by commas: (i.e. warehouse,vanA,vanB,vanC)");
+                                String vans = userInput.next();
+                                String[] vansArr = vans.split(",");
+                                for (i = 0; i < vansArr.length; i++) {
+                                    if (!vansArr[i].equals("warehouse")) {
+                                        Van vanToSort = new Van(vansArr[i]);
+                                        vanToSort.sortName();
+                                    }
+                                }
+                            }//make sure this works change back to !=
+                            if (numChoice == 7) {
+                                System.out.print("Please enter each warehouse name separated by commas: (i.e. warehouse,vanA,vanB,vanC)");
+                                String vans = userInput.next();
+                                String[] vansArr = vans.split(",");
+                                for (i = 0; i < vansArr.length; i++) {
+                                    if (!vansArr[i].equals("warehouse")) {
+                                        Van vanToSort = new Van(vansArr[i]);
+                                        vanToSort.sortNumber();
+                                    }
                                 }
                             }
-                        }//make sure this works change back to !=
-                        if (numChoice == 7) {
-                            System.out.print("Please enter each warehouse name separated by commas: (i.e. warehouse,vanA,vanB,vanC)");
-                            String vans = userInput.next();
-                            String[] vansArr = vans.split(",");
-                            for (i = 0; i < vansArr.length; i++) {
-                                if (!vansArr[i].equals("warehouse")) {
-                                    Van vanToSort = new Van(vansArr[i]);
-                                    vanToSort.sortNumber();
-                                }
+                            if (numChoice == 8) {
+                                warehouse.sortName(warehouse.getBikeParts());
                             }
-                        }
-                        if (numChoice == 8) {
-                            warehouse.sortName(warehouse.getBikeParts());
-                        }
-                        if (numChoice == 9) {
-                            warehouse.sortNumber();
-                        }
-                        if (numChoice == 10) {
-                            System.exit(0);
+                            if (numChoice == 9) {
+                                warehouse.sortNumber();
+                            }
+                            if (numChoice == 10) {
+                                System.exit(0);
+                            }
                         }
                     }
                 }
