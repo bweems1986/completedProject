@@ -135,7 +135,7 @@ public class SystemAdministrator {
         if((userName.equals("admin") && passWord.equals("madni"))) {
             while( numChoice != 3){
                 System.out.println("You are logged in as a System Administrator\n" + "1. Create a user account\n" + "2. Create a sales van\n" +
-                        "3. Delete a user account\n" + "4. Reset an account password\n" + "5. Exit\n" + "Please select an option: ");
+                        "3. Delete a user account\n" + "4. Reset an account password\n" + "5. Exit\n" + "Enter your choice: ");
             numChoice = login.nextInt();
                 if (numChoice == 1) {
                     addUserAccount(SystemAdministrator.createAccount());
@@ -143,7 +143,7 @@ public class SystemAdministrator {
                 if (numChoice == 2) {
                     createVanInventoryFile();
                     readTransfer();
-                    officeManager.orderPartsAlert(bikePart.getMinimumQuantity());
+                    officeManager.orderPartsAlert();
 
                 }
                 if (numChoice == 3){
@@ -164,12 +164,12 @@ public class SystemAdministrator {
             for (int i = 0; employees.size() > i; i++) {
                 if ((employees.get(i).getUserName().equals(userName) && (employees.get(i).getPassWord().equals(passWord)))) {
                     System.out.println("You are logged in as a: " + employees.get(i).getJobTitle());
-                    System.out.println("Enter the van letter that is assigned to you: ");
-                    String vanLetter = login.next();
-                    if (employees.get(i).getJobTitle().equals("sales" + vanLetter)) {
+                    if (employees.get(i).getJobTitle().contains("sales")) {
+                        System.out.println("Enter the van letter that is assigned to you: ");
+                        String vanLetter = login.next();
                         while (numChoice != 6) {
                             System.out.println("Please select an option from the Sales Associate menu:\n" + "1. Load sales van\n" + "2. Make sale by number and generate invoice\n" +
-                                    "3. Make sale by name and generate invoice\n" + "4. Sort van by part name\n" + "5. Sort van by part number\n" + "6. Exit\n");
+                                    "3. Make sale by name and generate invoice\n" + "4. Sort van by part name\n" + "5. Sort van by part number\n" + "6. Exit\n" + "Enter your choice: ");
                             numChoice = login.nextInt();
                             if (numChoice == 1) {
                                 readTransfer();//enter van + .txt
@@ -198,7 +198,7 @@ public class SystemAdministrator {
                                     }
                                 }
                                 salesAssociate.createInvoice();
-                                officeManager.orderPartsAlert(bikePart.getMinimumQuantity());
+                                officeManager.orderPartsAlert();
 
 
                             }
@@ -226,7 +226,7 @@ public class SystemAdministrator {
                                     }
                                 }
                                 salesAssociate.createInvoice();
-                                officeManager.orderPartsAlert(bikePart.getMinimumQuantity());
+                                officeManager.orderPartsAlert();
 
                             }
                             if (numChoice == 4) {
@@ -249,7 +249,7 @@ public class SystemAdministrator {
                     if (employees.get(i).getJobTitle().equals("officemanager")) {
                         while (numChoice != 5) {
                             System.out.println();
-                            System.out.println("Please select an option from the Office Manager menu:\n" + "1. Examine parts by name\n" + "2. Examine parts by name\n" + "3. Order new parts\n" + "4. Calculate sales commission\n" +
+                            System.out.println("Please select an option from the Office Manager menu:\n" + "1. Examine parts by name\n" + "2. Examine parts by number\n" + "3. Order new parts\n" + "4. Calculate sales commission\n" +
                                     "5. Exit\n" + "Enter your choice: ");
                             numChoice = login.nextInt();
                             if (numChoice == 1) {
@@ -263,7 +263,8 @@ public class SystemAdministrator {
                                 officeManager.examinePartNumber(partNumber);
                             }
                             if (numChoice == 3) {
-                                warehouse.userPart(officeManager.orderParts());
+                                officeManager.orderPartsAlert();
+                                warehouse.userPart(createNewBikePart());
                             }
                             if (numChoice == 4) {
                                 officeManager.salesCommissions();//enter van letter
@@ -278,7 +279,7 @@ public class SystemAdministrator {
                             System.out.println("Please select a option from the Warehouse manager menu:\n" + "1. Load warehouse with delivery file\n" + "2. Load warehouse manually\n" + "3. Examine part by name\n" +
                                     "4. Examine part by number\n" + "5. Display a part\n" + "6. Sort vans by name\n" +
                                     "7. Sort vans by number\n" + "8. Sort main warehouse by name\n" +
-                                    "9. Sort main warehouse by number\n" + "10. Exit");
+                                    "9. Sort main warehouse by number\n" + "10. Exit\n" + "Enter your choice: ");
                             numChoice = login.nextInt();
 
 
@@ -304,7 +305,7 @@ public class SystemAdministrator {
                                 warehouse.findPart(partName);
                             }
                             if (numChoice == 6) {
-                                System.out.print("Please enter each warehouse name separated by commas: (i.e. warehouse,vanA,vanB,vanC)");
+                                System.out.print("Please enter each warehouse name separated by commas: (i.e. vanA,vanB,vanC)");
                                 String vans = userInput.next();
                                 String[] vansArr = vans.split(",");
                                 for (i = 0; i < vansArr.length; i++) {
@@ -315,7 +316,7 @@ public class SystemAdministrator {
                                 }
                             }//make sure this works change back to !=
                             if (numChoice == 7) {
-                                System.out.print("Please enter each warehouse name separated by commas: (i.e. warehouse,vanA,vanB,vanC)");
+                                System.out.print("Please enter each warehouse name separated by commas: (i.e. vanA,vanB,vanC)");
                                 String vans = userInput.next();
                                 String[] vansArr = vans.split(",");
                                 for (i = 0; i < vansArr.length; i++) {
